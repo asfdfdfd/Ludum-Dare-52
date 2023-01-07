@@ -8,6 +8,8 @@ public class HarvesterController : MonoBehaviour
 {
     [SerializeField] private float _speed = 5.0f;
 
+    [SerializeField] private float _spicePerSecond = 10.0f;
+    
     private Rigidbody _rigidbody;
     
     private ActiveBeamManager _activeBeamManager;
@@ -45,6 +47,7 @@ public class HarvesterController : MonoBehaviour
     private void OnCollisionEnter(Collision other)
     {
         var shaiHulud = other.gameObject.GetComponent<ShaiHuludController>();
+        
         if (shaiHulud != null)
         {
             _isHarvesterDestroyed = true;
@@ -52,6 +55,16 @@ public class HarvesterController : MonoBehaviour
             onHarvesterDestroyed?.Invoke();
             
             Destroy(gameObject);
+        }
+    }
+
+    private void OnCollisionStay(Collision other)
+    {
+        var spiceController = other.gameObject.GetComponent<SpiceController>();
+
+        if (spiceController != null)
+        {
+            spiceController.Damage(_spicePerSecond * Time.deltaTime);
         }
     }
 }

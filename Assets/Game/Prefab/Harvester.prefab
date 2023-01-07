@@ -47,6 +47,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 5
+  _spicePerSecond: 100
+  onHarvesterDestroyed:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!54 &2814576761800169677
 Rigidbody:
   m_ObjectHideFlags: 0

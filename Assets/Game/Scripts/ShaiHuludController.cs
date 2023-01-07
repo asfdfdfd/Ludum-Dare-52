@@ -5,7 +5,9 @@ using UnityEngine;
 
 public class ShaiHuludController : MonoBehaviour
 {
-    private bool isHumanEaten = false;
+    private bool _isHumanEaten;
+
+    [SerializeField] private GameObject _prefabSpice;
     
     private void OnCollisionEnter(Collision other)
     {
@@ -13,11 +15,13 @@ public class ShaiHuludController : MonoBehaviour
         
         if (humanController != null)
         {
-            if (isHumanEaten != null)
+            if (!_isHumanEaten)
             {
-                isHumanEaten = true;
+                _isHumanEaten = true;
 
                 humanController.DestroyWithShaiHuludTeeths();
+
+                Instantiate(_prefabSpice, gameObject.transform.position, Quaternion.identity);
             }
             else
             {
