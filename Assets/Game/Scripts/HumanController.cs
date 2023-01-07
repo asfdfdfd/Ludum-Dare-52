@@ -1,18 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class HumanController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public void DestroyWithShaiHuludTeeths()
     {
-        
+        Destroy(gameObject);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void DestroyWithHeight()
     {
-        
+        Destroy(gameObject);
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.CompareTag("Plane"))
+        {
+            DestroyWithHeight();
+        }
     }
 }

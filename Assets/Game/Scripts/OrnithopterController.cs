@@ -17,8 +17,16 @@ public class OrnithopterController : MonoBehaviour
     
     [SerializeField] private GameObject _humanPrefab;
 
+    [SerializeField] private float _beamSpawnCooldown = 3.0f;
+
+    [SerializeField] private float _humanSpawnCooldown = 3.0f;
+    
     private ActiveBeamManager _activeBeamManager;
 
+    private float _beamSpawnCooldownTimer;
+
+    private float _humanSpawnCooldownTimer;
+    
     private void Awake()
     {
         var systemGameObject = GameObject.FindWithTag("System");
@@ -27,6 +35,26 @@ public class OrnithopterController : MonoBehaviour
 
     private void Update()
     {
+        if (_beamSpawnCooldownTimer > 0.0f)
+        {
+            _beamSpawnCooldownTimer -= Time.deltaTime;
+            
+            if (_beamSpawnCooldownTimer < 0)
+            {
+                _beamSpawnCooldownTimer = 0.0f;
+            }
+        }
+        
+        if (_humanSpawnCooldownTimer > 0.0f)
+        {
+            _humanSpawnCooldownTimer -= Time.deltaTime;
+            
+            if (_humanSpawnCooldownTimer < 0)
+            {
+                _humanSpawnCooldownTimer = 0.0f;
+            }
+        }        
+
         var directionVector = new Vector3(Input.GetAxisRaw("Horizontal"), 0.0f, Input.GetAxisRaw("Vertical"));
 
         var newPosition = gameObject.transform.position + directionVector * _speed * Time.deltaTime;
@@ -65,13 +93,23 @@ public class OrnithopterController : MonoBehaviour
 
     private void SpawnBeam()
     {
-        var activeBeam = Instantiate(_beamPrefab, _dropSpawnPoint.transform.position, Quaternion.identity);
+        if (_beamSpawnCooldownTimer == 0.0f)
+        {
+            var activeBeam = Instantiate(_beamPrefab, _dropSpawnPoint.transform.position, Quaternion.identity);
 
-        _activeBeamManager.ActiveBeam = activeBeam;
+            _activeBeamManager.ActiveBeam = activeBeam;
+
+            _beamSpawnCooldownTimer = _beamSpawnCooldown;
+        }
     }
 
     private void SpawnHuman()
     {
-        Instantiate(_humanPrefab, _dropSpawnPoint.transform.position, Quaternion.identity);
+        if (_humanSpawnCooldownTimer == 0.0f)
+        {
+            Instantiate(_humanPrefab, _dropSpawnPoint.transform.position, Quaternion.identity);
+            
+            _humanSpawnCooldownTimer = _humanSpawnCooldown;
+        }
     }
 }
