@@ -15,8 +15,11 @@ public class ActiveBeamManager : MonoBehaviour
         
         set
         {
-            Destroy(_activeBeam);
-            
+            if (_activeBeam != null)
+            {
+                _activeBeam.GetComponent<BeamController>().DiePlease();
+            }
+
             _activeBeam = value;
         }
     }

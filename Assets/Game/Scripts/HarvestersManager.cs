@@ -1,14 +1,17 @@
 using System;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class HarvesterManager : MonoBehaviour
+public class HarvestersManager : MonoBehaviour
 {
     [SerializeField] private GameObject _harvesterPrefab;
 
     [SerializeField] private int _harvestersCount = 3;
 
+    [SerializeField] private TextMeshProUGUI _textHarversters;
+    
     private GameObject _activeHarvester;
     private HarvesterController _activeHarvesterController;
     
@@ -17,8 +20,14 @@ public class HarvesterManager : MonoBehaviour
     private void Awake()
     {
         SpawnHarvester();
+        UpdateHarverstersText();
     }
 
+    private void UpdateHarverstersText()
+    {
+        _textHarversters.text = _harvestersCount.ToString();
+    }
+    
     private void SpawnHarvester()
     {
         _activeHarvester = Instantiate(_harvesterPrefab, gameObject.transform.position, Quaternion.identity);
@@ -34,9 +43,11 @@ public class HarvesterManager : MonoBehaviour
     {
         _harvestersCount--;
 
+        UpdateHarverstersText();
+
         if (_harvestersCount == -1)
         {
-            throw new NotImplementedException("YEAH BOI");
+            SceneManager.LoadScene("Game/Scenes/GameOverScene");
         }
         else
         {

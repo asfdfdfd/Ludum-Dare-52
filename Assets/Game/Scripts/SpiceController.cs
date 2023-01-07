@@ -6,7 +6,7 @@ public class SpiceController : MonoBehaviour
 {
     private float _health = 100.0f;
 
-    public void Damage(float value)
+    public float Damage(float value)
     {
         _health -= value;
 
@@ -14,5 +14,7 @@ public class SpiceController : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        return _health;
     }
 }

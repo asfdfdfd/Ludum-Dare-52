@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -20,6 +21,10 @@ public class OrnithopterController : MonoBehaviour
     [SerializeField] private float _beamSpawnCooldown = 3.0f;
 
     [SerializeField] private float _humanSpawnCooldown = 3.0f;
+
+    [SerializeField] private TextMeshProUGUI _textBeamCounter;
+    
+    [SerializeField] private TextMeshProUGUI _textHumanCounter;
     
     private ActiveBeamManager _activeBeamManager;
 
@@ -33,6 +38,16 @@ public class OrnithopterController : MonoBehaviour
         _activeBeamManager = systemGameObject.GetComponent<ActiveBeamManager>();
     }
 
+    private void UpdateBeamCooldownText()
+    {
+        _textBeamCounter.text = Mathf.CeilToInt(_beamSpawnCooldownTimer).ToString();
+    }
+    
+    private void UpdateHumanCooldownText()
+    {
+        _textHumanCounter.text = Mathf.CeilToInt(_humanSpawnCooldownTimer).ToString();
+    }
+
     private void Update()
     {
         if (_beamSpawnCooldownTimer > 0.0f)
@@ -43,6 +58,8 @@ public class OrnithopterController : MonoBehaviour
             {
                 _beamSpawnCooldownTimer = 0.0f;
             }
+            
+            UpdateBeamCooldownText();
         }
         
         if (_humanSpawnCooldownTimer > 0.0f)
@@ -53,6 +70,8 @@ public class OrnithopterController : MonoBehaviour
             {
                 _humanSpawnCooldownTimer = 0.0f;
             }
+            
+            UpdateHumanCooldownText();
         }        
 
         var directionVector = new Vector3(Input.GetAxisRaw("Horizontal"), 0.0f, Input.GetAxisRaw("Vertical"));
@@ -100,6 +119,8 @@ public class OrnithopterController : MonoBehaviour
             _activeBeamManager.ActiveBeam = activeBeam;
 
             _beamSpawnCooldownTimer = _beamSpawnCooldown;
+
+            UpdateBeamCooldownText();
         }
     }
 
@@ -110,6 +131,8 @@ public class OrnithopterController : MonoBehaviour
             Instantiate(_humanPrefab, _dropSpawnPoint.transform.position, Quaternion.identity);
             
             _humanSpawnCooldownTimer = _humanSpawnCooldown;
+            
+            UpdateHumanCooldownText();
         }
     }
 }

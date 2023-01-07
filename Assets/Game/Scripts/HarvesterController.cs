@@ -9,14 +9,20 @@ public class HarvesterController : MonoBehaviour
     [SerializeField] private float _speed = 5.0f;
 
     [SerializeField] private float _spicePerSecond = 10.0f;
+
+    [SerializeField] private AudioSource _audioSourceMoving;
+    [SerializeField] private AudioSource _audioSourceWorking;
     
     private Rigidbody _rigidbody;
     
     private ActiveBeamManager _activeBeamManager;
-
+    private PointsController _pointsController;
+    
     private bool _isHarvesterDestroyed = false;
 
     public UnityEvent onHarvesterDestroyed;
+
+    private bool _isMoving;
     
     private void Awake()
     {
@@ -24,6 +30,7 @@ public class HarvesterController : MonoBehaviour
         
         var systemGameObject = GameObject.FindWithTag("System");
         _activeBeamManager = systemGameObject.GetComponent<ActiveBeamManager>();
+        _pointsController = systemGameObject.GetComponent<PointsController>();
     }
 
     private void FixedUpdate()
@@ -41,6 +48,26 @@ public class HarvesterController : MonoBehaviour
             var positionNew = Vector3.MoveTowards(_rigidbody.position, positionTarget, distance);
 
             _rigidbody.MovePosition(positionNew);
+
+            var distanceToTarget = Vector3.Distance(positionTarget, positionNew);
+
+            _isMoving = distanceToTarget > 0.001f; 
+            
+            if (_isMoving)
+            {
+                if (!_audioSourceMoving.isPlaying)
+                {
+                    _audioSourceMoving.Play();
+                }
+            }
+            else
+            {
+                _audioSourceMoving.Stop();
+            }
+        }
+        else
+        {
+            _audioSourceMoving.Stop();
         }
     }
 
@@ -60,11 +87,31 @@ public class HarvesterController : MonoBehaviour
 
     private void OnCollisionStay(Collision other)
     {
+        if (_isMoving)
+        {
+            return;
+        }
+        
         var spiceController = other.gameObject.GetComponent<SpiceController>();
 
         if (spiceController != null)
         {
-            spiceController.Damage(_spicePerSecond * Time.deltaTime);
+            float spiceRemaining = spiceController.Damage(_spicePerSecond * Time.deltaTime);
+
+            if (spiceRemaining > 0.0f)
+            {
+                if (!_audioSourceWorking.isPlaying)
+                {
+                    _audioSourceWorking.Play();
+                }
+            }
+            else
+            {
+                _audioSourceWorking.Stop();
+            }
+
+            int points = (int) (_spicePerSecond * Time.deltaTime * 100);
+            _pointsController.AddPointsForSpice(points);
         }
     }
 }
