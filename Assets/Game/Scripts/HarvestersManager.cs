@@ -7,12 +7,11 @@ using UnityEngine.SceneManagement;
 public class HarvestersManager : MonoBehaviour
 {
     [SerializeField] private GameObject _harvesterPrefab;
-
+    [SerializeField] private GameObject _harvesterDeadPrefab;
+    
     [SerializeField] private int _harvestersCount = 3;
 
     [SerializeField] private TextMeshProUGUI _textHarversters;
-
-    [SerializeField] private AudioSource _audioSourceHarvesterDestroyed;
     
     private GameObject _activeHarvester;
     private HarvesterController _activeHarvesterController;
@@ -37,14 +36,14 @@ public class HarvestersManager : MonoBehaviour
         
         _activeHarvesterController.onHarvesterDestroyed.AddListener(() =>
         {
+            Instantiate(_harvesterDeadPrefab, _activeHarvester.transform.position, _activeHarvester.transform.rotation);
+            
             OnHarversterDestroyed();
         });
     }
     
     private void OnHarversterDestroyed()
     {
-        _audioSourceHarvesterDestroyed.Play();
-        
         _harvestersCount--;
 
         UpdateHarverstersText();
