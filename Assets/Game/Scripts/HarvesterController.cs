@@ -12,6 +12,8 @@ public class HarvesterController : MonoBehaviour
 
     [SerializeField] private AudioSource _audioSourceMoving;
     [SerializeField] private AudioSource _audioSourceWorking;
+
+    [SerializeField] private GameObject _smokeHarvest;
     
     private Rigidbody _rigidbody;
     
@@ -96,7 +98,7 @@ public class HarvesterController : MonoBehaviour
         }
     }
 
-    private void OnCollisionStay(Collision other)
+    private void OnTriggerStay(Collider other)
     {
         if (_isMoving)
         {
@@ -108,9 +110,11 @@ public class HarvesterController : MonoBehaviour
         if (spiceController != null)
         {
             float spiceRemaining = spiceController.Damage(_spicePerSecond * Time.deltaTime);
-
+            
             if (spiceRemaining > 0.0f)
             {
+                _smokeHarvest.SetActive(true);
+                
                 if (!_audioSourceWorking.isPlaying)
                 {
                     _audioSourceWorking.Play();
@@ -118,6 +122,8 @@ public class HarvesterController : MonoBehaviour
             }
             else
             {
+                _smokeHarvest.SetActive(false);
+                
                 _audioSourceWorking.Stop();
             }
 
