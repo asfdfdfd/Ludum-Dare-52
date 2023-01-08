@@ -25,17 +25,32 @@ public class OrnithopterController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _textBeamCounter;
     
     [SerializeField] private TextMeshProUGUI _textHumanCounter;
+
+    [SerializeField] private AudioSource _audioFlying;
+
+    [SerializeField] private float audioFlyingMax = 0.3f;
+    [SerializeField] private float audioFlyingMin = 0.1f;
+    [SerializeField] private float _soundSpeed = 0.2f;
+
+    [SerializeField] private AudioSource _audioSourceThrow;
     
     private ActiveBeamManager _activeBeamManager;
 
     private float _beamSpawnCooldownTimer;
 
     private float _humanSpawnCooldownTimer;
+
+    private bool _isFlying = false;
     
     private void Awake()
     {
         var systemGameObject = GameObject.FindWithTag("System");
         _activeBeamManager = systemGameObject.GetComponent<ActiveBeamManager>();
+    }
+
+    private void Start()
+    {
+        _audioFlying.volume = audioFlyingMin;
     }
 
     private void UpdateBeamCooldownText()
@@ -76,6 +91,8 @@ public class OrnithopterController : MonoBehaviour
 
         var directionVector = new Vector3(Input.GetAxisRaw("Horizontal"), 0.0f, Input.GetAxisRaw("Vertical"));
 
+        _isFlying = directionVector.sqrMagnitude > Mathf.Epsilon;
+        
         var newPosition = gameObject.transform.position + directionVector * _speed * Time.deltaTime;
 
         if (newPosition.x > _xboundary)
@@ -108,12 +125,33 @@ public class OrnithopterController : MonoBehaviour
         {
             SpawnHuman();
         }
+        
+        TuneFlyingSound(Time.deltaTime);
     }
 
+    private void TuneFlyingSound(float deltaTime)
+    {
+        var minusAddon = _isFlying ? 1 : -1;
+        
+        _audioFlying.volume += minusAddon * deltaTime * _soundSpeed;
+
+        if (_audioFlying.volume > audioFlyingMax)
+        {
+            _audioFlying.volume = audioFlyingMax;
+        }
+
+        if (_audioFlying.volume < audioFlyingMin)
+        {
+            _audioFlying.volume = audioFlyingMin;
+        }
+    }
+    
     private void SpawnBeam()
     {
         if (_beamSpawnCooldownTimer == 0.0f)
         {
+            _audioSourceThrow.Play();
+            
             var activeBeam = Instantiate(_beamPrefab, _dropSpawnPoint.transform.position, Quaternion.identity);
 
             _activeBeamManager.ActiveBeam = activeBeam;
@@ -128,6 +166,8 @@ public class OrnithopterController : MonoBehaviour
     {
         if (_humanSpawnCooldownTimer == 0.0f)
         {
+            _audioSourceThrow.Play();
+            
             Instantiate(_humanPrefab, _dropSpawnPoint.transform.position, Quaternion.identity);
             
             _humanSpawnCooldownTimer = _humanSpawnCooldown;

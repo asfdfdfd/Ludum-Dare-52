@@ -21,7 +21,7 @@ public class ShaiHuludSpawnManager : MonoBehaviour
     [SerializeField] private float _pitTimeMax;
 
     [SerializeField] private AudioSource _audioSourceShaiHuludWalking;
-    
+
     private SpawnPoint[] _spawnPoints;
     
     private void Awake()
@@ -53,7 +53,7 @@ public class ShaiHuludSpawnManager : MonoBehaviour
 
             yield return new WaitForSeconds(pitTime);
             
-            _audioSourceShaiHuludWalking.Stop();
+            _audioSourceShaiHuludWalking.Pause();
 
             var shaiHuludPosition = new Vector3(spawnPoint.transform.position.x, -4.0f, spawnPoint.transform.position.z);
             
