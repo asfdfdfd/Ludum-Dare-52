@@ -53,11 +53,11 @@ public class ShaiHuludSpawnManager : MonoBehaviour
 
             yield return new WaitForSeconds(pitTime);
             
-            Destroy(pit);
-        
             _audioSourceShaiHuludWalking.Stop();
+
+            var shaiHuludPosition = new Vector3(spawnPoint.transform.position.x, -4.0f, spawnPoint.transform.position.z);
             
-            var activeShaiHulud = Instantiate(_prefabShaiHulud, spawnPoint.transform.position, Quaternion.identity);
+            var activeShaiHulud = Instantiate(_prefabShaiHulud, shaiHuludPosition, Quaternion.identity);
 
             var shaiHuludController = activeShaiHulud.GetComponent<ShaiHuludController>();
 
@@ -70,6 +70,8 @@ public class ShaiHuludSpawnManager : MonoBehaviour
             yield return shaiHuludController.HideYourself();
             
             Destroy(activeShaiHulud);
+            
+            Destroy(pit);
         }
     }
 }

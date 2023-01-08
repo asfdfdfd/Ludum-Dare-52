@@ -17,6 +17,8 @@ public class ShaiHuludController : MonoBehaviour
     private Rigidbody _rigidbody;
 
     private ActiveBeamManager _activeBeamManager;
+
+    private float _startY;
     
     private void Awake()
     {
@@ -26,7 +28,12 @@ public class ShaiHuludController : MonoBehaviour
         
         _rigidbody = GetComponent<Rigidbody>();
     }
-    
+
+    private void Start()
+    {
+        _startY = gameObject.transform.position.y;
+    }
+
     private void OnCollisionEnter(Collision other)
     {
         var humanController = other.gameObject.GetComponent<HumanController>();
@@ -50,7 +57,7 @@ public class ShaiHuludController : MonoBehaviour
     
     public IEnumerator ShowYourself()
     {
-        yield return _rigidbody.DOMoveY(1.0f, 1.0f).WaitForCompletion();
+        yield return _rigidbody.DOMoveY(0.0f, 1.0f).WaitForCompletion();
     }
 
     public IEnumerator HideYourself()
@@ -60,7 +67,7 @@ public class ShaiHuludController : MonoBehaviour
             _activeBeamManager.ActiveBeam = null;
         }
         
-        yield return _rigidbody.DOMoveY(-2.0f, 1.0f).WaitForCompletion();
+        yield return _rigidbody.DOMoveY(_startY, 1.0f).WaitForCompletion();
 
         if (_isHumanEaten)
         {

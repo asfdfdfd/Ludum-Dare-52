@@ -30,7 +30,7 @@ public class HarvestersManager : MonoBehaviour
     
     private void SpawnHarvester()
     {
-        _activeHarvester = Instantiate(_harvesterPrefab, gameObject.transform.position, Quaternion.identity);
+        _activeHarvester = Instantiate(_harvesterPrefab, gameObject.transform.position, Quaternion.Euler(0.0f, -27.6f, 0.0f));
         _activeHarvesterController = _activeHarvester.GetComponent<HarvesterController>();
         
         _activeHarvesterController.onHarvesterDestroyed.AddListener(() =>

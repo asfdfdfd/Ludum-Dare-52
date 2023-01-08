@@ -46,15 +46,19 @@ public class HarvesterController : MonoBehaviour
             var distance = _speed * Time.fixedDeltaTime;
             var positionTarget = new Vector3(activeBeam.transform.position.x, _rigidbody.position.y, activeBeam.transform.position.z);
             var positionNew = Vector3.MoveTowards(_rigidbody.position, positionTarget, distance);
-
-            _rigidbody.MovePosition(positionNew);
-
+            
             var distanceToTarget = Vector3.Distance(positionTarget, positionNew);
 
             _isMoving = distanceToTarget > 0.001f; 
             
             if (_isMoving)
             {
+                _rigidbody.MovePosition(positionNew);
+
+                Vector3 targetDirection = (positionNew - _rigidbody.position).normalized;
+                var targetRotation = Quaternion.LookRotation(targetDirection);
+                _rigidbody.MoveRotation(targetRotation);
+                
                 if (!_audioSourceMoving.isPlaying)
                 {
                     _audioSourceMoving.Play();
