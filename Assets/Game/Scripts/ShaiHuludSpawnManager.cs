@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -46,13 +47,17 @@ public class ShaiHuludSpawnManager : MonoBehaviour
             
             var spawnPointIndex = Random.Range(0, _spawnPoints.Length);
             var spawnPoint = _spawnPoints[spawnPointIndex];
-        
-            var pit = Instantiate(_prefabShaiHuludPit, spawnPoint.transform.position, Quaternion.identity);
 
+            var pitPosition = new Vector3(spawnPoint.transform.position.x, -1.0f, spawnPoint.transform.position.z);
+            
+            var pit = Instantiate(_prefabShaiHuludPit, pitPosition, Quaternion.identity);
+
+            yield return pit.transform.DOMoveY(0.0f, 0.3f).WaitForCompletion();
+            
             var pitTime = Random.Range(_pitTimeMin, _pitTimeMax);
 
             yield return new WaitForSeconds(pitTime);
-            
+
             _audioSourceShaiHuludWalking.Pause();
 
             var shaiHuludPosition = new Vector3(spawnPoint.transform.position.x, -4.0f, spawnPoint.transform.position.z);
@@ -70,7 +75,9 @@ public class ShaiHuludSpawnManager : MonoBehaviour
             yield return shaiHuludController.HideYourself();
             
             Destroy(activeShaiHulud);
-            
+
+            yield return pit.transform.DOMoveY(-1.0f, 0.3f).WaitForCompletion();
+                
             Destroy(pit);
         }
     }
