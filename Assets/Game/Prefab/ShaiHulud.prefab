@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 302996658456795391}
   - component: {fileID: 7805827508905542356}
   - component: {fileID: 104903764830745818}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 99361336955362318}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -2, z: 0}
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -97,6 +97,64 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &5182981208551267672
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8353463913372500512}
+  - component: {fileID: 366717411746466017}
+  - component: {fileID: 6440049220470282099}
+  m_Layer: 10
+  m_Name: BeamTrigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8353463913372500512
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5182981208551267672}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -1.4, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5930898109039219771}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &366717411746466017
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5182981208551267672}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3.3376024, y: 3.327714, z: 1}
+  m_Center: {x: 0.08525193, y: -0.7168412, z: 0}
+--- !u!114 &6440049220470282099
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5182981208551267672}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34445cf23b3a147cf900de26a0db46c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7581955801362547882
 GameObject:
   m_ObjectHideFlags: 0
@@ -108,7 +166,7 @@ GameObject:
   - component: {fileID: 5930898109039219771}
   - component: {fileID: 5494776686009782108}
   - component: {fileID: 7550496819977231157}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: ShaiHulud
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -128,6 +186,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3244941225070489868}
+  - {fileID: 8353463913372500512}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -145,6 +204,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _prefabSpice: {fileID: 2199640353624047335, guid: 71899efa691e94aaf986675d5230b97d,
     type: 3}
+  _beamTrigger: {fileID: 6440049220470282099}
 --- !u!54 &7550496819977231157
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -78,6 +78,13 @@ public class HarvesterController : MonoBehaviour
         if (shaiHulud != null)
         {
             _isHarvesterDestroyed = true;
+
+            var activeBeam = _activeBeamManager.ActiveBeam;
+            if (activeBeam != null)
+            {
+                activeBeam.GetComponent<BeamController>().DiePlease();
+                _activeBeamManager.ActiveBeam = null;
+            }
             
             onHarvesterDestroyed?.Invoke();
             

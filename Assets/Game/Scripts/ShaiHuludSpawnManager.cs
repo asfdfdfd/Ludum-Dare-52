@@ -9,45 +9,67 @@ public class ShaiHuludSpawnManager : MonoBehaviour
     [SerializeField] private GameObject _shaiHuludSpawnPointsRoot;
     
     [SerializeField] private GameObject _prefabShaiHulud;
+    [SerializeField] private GameObject _prefabShaiHuludPit;
+    
+    [SerializeField] private float _respawnTimeMin;
+    [SerializeField] private float _respawnTimeMax;
 
-    [SerializeField] private float _respawnTime;
+    [SerializeField] private float _stayTimeMin;
+    [SerializeField] private float _stayTimeMax;
 
-    private float _respawnTimer;
+    [SerializeField] private float _pitTimeMin;
+    [SerializeField] private float _pitTimeMax;
 
+    [SerializeField] private AudioSource _audioSourceShaiHuludWalking;
+    
     private SpawnPoint[] _spawnPoints;
-
-    private GameObject _activeShaiHulud;
+    
     private void Awake()
     {
-        RearmRespawnTimer();
-        
         _spawnPoints = _shaiHuludSpawnPointsRoot.GetComponentsInChildren<SpawnPoint>();
     }
 
-    private void RearmRespawnTimer()
+    private void Start()
     {
-        _respawnTimer = _respawnTime;
-    }
-    
-    private void Update()
-    {
-        _respawnTimer -= Time.deltaTime;
-        
-        if (_respawnTimer <= 0.0f)
-        {
-            SpawnShaiHulud();
-            
-            RearmRespawnTimer();
-        }
+        StartCoroutine(SpawnLoopCoroutine());
     }
 
-    private void SpawnShaiHulud()
+    private IEnumerator SpawnLoopCoroutine()
     {
-        Destroy(_activeShaiHulud);
+        while (true)
+        {
+            var respawnTimer = Random.Range(_respawnTimeMin, _respawnTimeMax);
+
+            _audioSourceShaiHuludWalking.Play();
+            
+            yield return new WaitForSeconds(respawnTimer);
+            
+            var spawnPointIndex = Random.Range(0, _spawnPoints.Length);
+            var spawnPoint = _spawnPoints[spawnPointIndex];
         
-        var spawnPointIndex = Random.Range(0, _spawnPoints.Length);
-        var spawnPoint = _spawnPoints[spawnPointIndex];
+            var pit = Instantiate(_prefabShaiHuludPit, spawnPoint.transform.position, Quaternion.identity);
+
+            var pitTime = Random.Range(_pitTimeMin, _pitTimeMax);
+
+            yield return new WaitForSeconds(pitTime);
+            
+            Destroy(pit);
         
-        _activeShaiHulud = Instantiate(_prefabShaiHulud, spawnPoint.transform.position, Quaternion.identity);
+            _audioSourceShaiHuludWalking.Stop();
+            
+            var activeShaiHulud = Instantiate(_prefabShaiHulud, spawnPoint.transform.position, Quaternion.identity);
+
+            var shaiHuludController = activeShaiHulud.GetComponent<ShaiHuludController>();
+
+            yield return shaiHuludController.ShowYourself();
+            
+            var stayTime = Random.Range(_stayTimeMin, _stayTimeMax);
+            
+            yield return new WaitForSeconds(stayTime);
+
+            yield return shaiHuludController.HideYourself();
+            
+            Destroy(activeShaiHulud);
+        }
     }
 }
