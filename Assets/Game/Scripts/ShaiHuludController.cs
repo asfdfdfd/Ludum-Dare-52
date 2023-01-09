@@ -6,6 +6,8 @@ public class ShaiHuludController : MonoBehaviour
 {
     private bool _isHumanEaten;
 
+    public bool IsHumanEaten => _isHumanEaten;
+    
     [SerializeField] private GameObject _prefabSpice;
 
     [SerializeField] private ShaiHuludBeamTrigger _beamTrigger;
@@ -57,7 +59,7 @@ public class ShaiHuludController : MonoBehaviour
     {
         _audioSourceShaiHuludEnter.Play();
         
-        yield return _rigidbody.DOMoveY(0.0f, duration).WaitForCompletion();
+        yield return _rigidbody.DOMoveY(0.0f, duration).SetEase(Ease.InOutQuint).WaitForCompletion();
 
         _audioSourceShaiHuludEnter.DOFade(0.0f, 0.1f);
     }
@@ -71,7 +73,7 @@ public class ShaiHuludController : MonoBehaviour
             _activeBeamManager.ActiveBeam = null;
         }
         
-        yield return _rigidbody.DOMoveY(_startY, duration).WaitForCompletion();
+        yield return _rigidbody.DOMoveY(_startY, duration).SetEase(Ease.InOutQuint).WaitForCompletion();
         
         if (_isHumanEaten)
         {

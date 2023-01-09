@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class DialogSystemStarter : MonoBehaviour
@@ -9,6 +6,8 @@ public class DialogSystemStarter : MonoBehaviour
     
     private void Start()
     {
-        // _dialogSystem.SetActive(!GameState.IsTutorialDisplayed);
+        GameState.IsTutorialDisplayed = true;
+        
+        _dialogSystem.SetActive(!GameState.IsTutorialDisplayed);
     }
 }

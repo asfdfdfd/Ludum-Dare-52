@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 public class OrnithopterController : MonoBehaviour
 {
@@ -22,9 +23,9 @@ public class OrnithopterController : MonoBehaviour
 
     [SerializeField] private float _humanSpawnCooldown = 3.0f;
 
-    [SerializeField] private TextMeshProUGUI _textBeamCounter;
+    [SerializeField] private Image _imageBeamProgress;
     
-    [SerializeField] private TextMeshProUGUI _textHumanCounter;
+    [SerializeField] private Image _imageHumanProgress;
 
     [SerializeField] private AudioSource _audioFlying;
 
@@ -55,12 +56,12 @@ public class OrnithopterController : MonoBehaviour
 
     private void UpdateBeamCooldownText()
     {
-        _textBeamCounter.text = Mathf.CeilToInt(_beamSpawnCooldownTimer).ToString();
+        _imageBeamProgress.fillAmount = 1.0f - _beamSpawnCooldownTimer / _beamSpawnCooldown;
     }
     
     private void UpdateHumanCooldownText()
     {
-        _textHumanCounter.text = Mathf.CeilToInt(_humanSpawnCooldownTimer).ToString();
+        _imageHumanProgress.fillAmount = 1.0f - _humanSpawnCooldownTimer / _humanSpawnCooldown;
     }
 
     private void Update()

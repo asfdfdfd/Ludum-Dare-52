@@ -74,9 +74,9 @@ public class ShaiHuludSpawnManager : MonoBehaviour
             pitController.HideSand();
             
             var stayTime = Random.Range(_stayTimeMin, _stayTimeMax);
-            
-            yield return new WaitForSeconds(stayTime);
 
+            yield return WaitShaiHuludOrDropIfEaten(stayTime, shaiHuludController);
+            
             pitController.ShowSand();
             
             yield return shaiHuludController.HideYourself(_inOutDurationSeconds);
@@ -86,6 +86,26 @@ public class ShaiHuludSpawnManager : MonoBehaviour
             yield return pit.transform.DOMoveY(-1.0f, 0.3f).WaitForCompletion();
                 
             Destroy(pit);
+        }
+    }
+
+    private IEnumerator WaitShaiHuludOrDropIfEaten(float stayTime, ShaiHuludController shaiHuludController)
+    {
+        while (true)
+        {
+            stayTime -= Time.deltaTime;
+
+            if (stayTime <= 0)
+            {
+                break;
+            }
+
+            if (shaiHuludController.IsHumanEaten)
+            {
+                break;
+            }
+
+            yield return null;
         }
     }
 }

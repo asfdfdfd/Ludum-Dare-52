@@ -18,6 +18,7 @@ public class GameOverSceneController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            GameState.Points = 0;
             SceneManager.LoadScene("Game/Scenes/GameplayScene");
         }
     }
