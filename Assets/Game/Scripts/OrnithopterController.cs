@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -118,6 +119,10 @@ public class OrnithopterController : MonoBehaviour
         }
 
         gameObject.transform.position = newPosition;
+
+        var newRotation = new Vector3(directionVector.z * 20.0f, 0.0f, -directionVector.x * 20.0f);
+
+        gameObject.transform.DORotate(newRotation, 0.1f);
         
         TuneFlyingSound(Time.deltaTime);
     }

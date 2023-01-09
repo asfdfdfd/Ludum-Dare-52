@@ -26,8 +26,8 @@ public class InputController : MonoBehaviour
         else
         {
             var directionVector = new Vector3(Input.GetAxisRaw("Horizontal"), 0.0f, Input.GetAxisRaw("Vertical"));
-
-            _ornithopter.Move(directionVector);
+            
+            _ornithopter.Move(directionVector.normalized);
 
             if (Input.GetAxis("Fire1") > 0.0f)
             {
