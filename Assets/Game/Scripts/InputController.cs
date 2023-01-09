@@ -8,28 +8,17 @@ public class InputController : MonoBehaviour
     [SerializeField] private OrnithopterController _ornithopter;
 
     [SerializeField] private DialogSystemController _dialogSystemController;
-
-    private bool isFire1PressedInDialog = false;
-    private bool isFire2PressedInDialog = false;
     
     private void Update()
     {
         if (!GameState.IsTutorialDisplayed)
         {
-            bool isFire1PressedInDialogNew = Input.GetAxis("Fire2") > 0.0f;
-            bool isFire1Pressed = !isFire1PressedInDialog && isFire1PressedInDialogNew;
-            isFire1PressedInDialog = isFire1PressedInDialogNew;
-                
-            if (isFire1Pressed || Input.GetKeyDown(KeyCode.E))
+            if (Input.GetKeyDown(KeyCode.E))
             {
                 _dialogSystemController.SkipIntro();
             }
 
-            bool isFire2PressedInDialogNew = Input.GetAxis("Fire1") > 0.0f;
-            bool isFire2Pressed = !isFire2PressedInDialog && isFire2PressedInDialogNew;
-            isFire2PressedInDialog = isFire2PressedInDialogNew;
-            
-            if (isFire2Pressed || Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Space))
             {
                 _dialogSystemController.NextDialog();
             }
