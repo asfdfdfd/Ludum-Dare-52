@@ -21,6 +21,8 @@ public class ShaiHuludSpawnManager : MonoBehaviour
     [SerializeField] private float _pitTimeMin;
     [SerializeField] private float _pitTimeMax;
 
+    [SerializeField] private float _inOutDurationSeconds;
+    
     [SerializeField] private AudioSource _audioSourceShaiHuludWalking;
 
     private SpawnPoint[] _spawnPoints;
@@ -66,13 +68,13 @@ public class ShaiHuludSpawnManager : MonoBehaviour
 
             var shaiHuludController = activeShaiHulud.GetComponent<ShaiHuludController>();
 
-            yield return shaiHuludController.ShowYourself();
+            yield return shaiHuludController.ShowYourself(_inOutDurationSeconds);
             
             var stayTime = Random.Range(_stayTimeMin, _stayTimeMax);
             
             yield return new WaitForSeconds(stayTime);
 
-            yield return shaiHuludController.HideYourself();
+            yield return shaiHuludController.HideYourself(_inOutDurationSeconds);
             
             Destroy(activeShaiHulud);
 

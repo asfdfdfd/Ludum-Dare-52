@@ -13,8 +13,6 @@ public class ShaiHuludController : MonoBehaviour
     [SerializeField] private AudioSource _audioSourceEatHuman;
     [SerializeField] private AudioSource _audioSourceShaiHuludEnter;
     [SerializeField] private AudioSource _audioSourceShaiHuludExit;
-    
-    private PointsController _pointsController;
 
     private Rigidbody _rigidbody;
 
@@ -25,7 +23,7 @@ public class ShaiHuludController : MonoBehaviour
     private void Awake()
     {
         var gameObjectSystem = GameObject.FindWithTag("System");
-        _pointsController = gameObjectSystem.GetComponent<PointsController>();
+        gameObjectSystem.GetComponent<PointsController>();
         _activeBeamManager = gameObjectSystem.GetComponent<ActiveBeamManager>();
         
         _rigidbody = GetComponent<Rigidbody>();
@@ -47,8 +45,6 @@ public class ShaiHuludController : MonoBehaviour
                 _audioSourceEatHuman.Play();
                 
                 _isHumanEaten = true;
-                
-                _pointsController.AddPointsForHuman();
 
                 humanController.DestroyWithShaiHuludTeeths();
             }
@@ -59,14 +55,16 @@ public class ShaiHuludController : MonoBehaviour
         }
     }
     
-    public IEnumerator ShowYourself()
+    public IEnumerator ShowYourself(float duration)
     {
         _audioSourceShaiHuludEnter.Play();
         
-        yield return _rigidbody.DOMoveY(0.0f, 2.0f).WaitForCompletion();
+        yield return _rigidbody.DOMoveY(0.0f, duration).WaitForCompletion();
+
+        _audioSourceShaiHuludEnter.DOFade(0.0f, 0.1f);
     }
 
-    public IEnumerator HideYourself()
+    public IEnumerator HideYourself(float duration)
     {
         _audioSourceShaiHuludExit.Play();
         
@@ -75,8 +73,10 @@ public class ShaiHuludController : MonoBehaviour
             _activeBeamManager.ActiveBeam = null;
         }
         
-        yield return _rigidbody.DOMoveY(_startY, 2.0f).WaitForCompletion();
+        yield return _rigidbody.DOMoveY(_startY, duration).WaitForCompletion();
 
+        _audioSourceShaiHuludExit.DOFade(0.0f, 0.1f);
+        
         if (_isHumanEaten)
         {
             var spicePosition = new Vector3(gameObject.transform.position.x, 0.01f, gameObject.transform.position.z);
