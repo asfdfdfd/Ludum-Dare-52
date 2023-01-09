@@ -8,6 +8,8 @@ public class BeamController : MonoBehaviour
     [SerializeField] private AudioSource _audioSourceExplosion;
     [SerializeField] private AudioSource _audioSourceIdle;
 
+    [SerializeField] private GameObject _vfxDetonation;
+    
     private bool _shouldDie;
     
     public void DiePlease()
@@ -16,6 +18,8 @@ public class BeamController : MonoBehaviour
         _audioSourceExplosion.Play();
 
         _shouldDie = true;
+        
+        _vfxDetonation.SetActive(true);
     }
 
     private void Update()

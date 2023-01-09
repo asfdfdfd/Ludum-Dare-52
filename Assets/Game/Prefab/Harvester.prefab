@@ -183,6 +183,7 @@ MonoBehaviour:
   _audioSourceMoving: {fileID: 1910455929720465760}
   _audioSourceWorking: {fileID: 5698046305321159891}
   _smokeHarvest: {fileID: 1847781667375138260}
+  _vfxMove: {fileID: 7167630819008056516}
   onHarvesterDestroyed:
     m_PersistentCalls:
       m_Calls: []
@@ -5031,7 +5032,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1004153217593356638
 Transform:
   m_ObjectHideFlags: 0

@@ -45,13 +45,11 @@ public class ShaiHuludController : MonoBehaviour
                 _audioSourceEatHuman.Play();
                 
                 _isHumanEaten = true;
+            }
+            
+            humanController.DestroyWithShaiHuludTeeths();
 
-                humanController.DestroyWithShaiHuludTeeths();
-            }
-            else
-            {
-                humanController.DestroyWithHeight();
-            }
+            other.gameObject.transform.parent = gameObject.transform;
         }
     }
     

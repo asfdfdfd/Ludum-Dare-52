@@ -5,12 +5,10 @@ using UnityEngine;
 
 public class DialogSystemStarter : MonoBehaviour
 {
+    [SerializeField] private GameObject _dialogSystem;
+    
     private void Start()
     {
-        if (GameState.IsTutorialDisplayed)
-        {
-            // Destroy(gameObject);
-            // return;
-        }
+        // _dialogSystem.SetActive(!GameState.IsTutorialDisplayed);
     }
 }

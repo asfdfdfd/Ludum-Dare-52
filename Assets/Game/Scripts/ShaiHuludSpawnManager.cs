@@ -53,7 +53,8 @@ public class ShaiHuludSpawnManager : MonoBehaviour
             var pitPosition = new Vector3(spawnPoint.transform.position.x, -1.0f, spawnPoint.transform.position.z);
             
             var pit = Instantiate(_prefabShaiHuludPit, pitPosition, Quaternion.identity);
-
+            var pitController = pit.GetComponent<ShaiHuludPitController>();
+            
             yield return pit.transform.DOMoveY(0.0f, 0.3f).WaitForCompletion();
             
             var pitTime = Random.Range(_pitTimeMin, _pitTimeMax);
@@ -70,10 +71,14 @@ public class ShaiHuludSpawnManager : MonoBehaviour
 
             yield return shaiHuludController.ShowYourself(_inOutDurationSeconds);
             
+            pitController.HideSand();
+            
             var stayTime = Random.Range(_stayTimeMin, _stayTimeMax);
             
             yield return new WaitForSeconds(stayTime);
 
+            pitController.ShowSand();
+            
             yield return shaiHuludController.HideYourself(_inOutDurationSeconds);
             
             Destroy(activeShaiHulud);

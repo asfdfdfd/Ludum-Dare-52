@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2328372255515733576
 Transform:
   m_ObjectHideFlags: 0
@@ -4880,6 +4880,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _audioSourceExplosion: {fileID: 2838290451451102694}
   _audioSourceIdle: {fileID: 3029555867653590535}
+  _vfxDetonation: {fileID: 3117400858713261269}
 --- !u!1 &5118306115197281649
 GameObject:
   m_ObjectHideFlags: 0
@@ -4897,7 +4898,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6619656675371005341
 Transform:
   m_ObjectHideFlags: 0

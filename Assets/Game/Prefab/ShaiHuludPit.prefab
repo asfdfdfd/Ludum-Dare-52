@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8079636624451229954}
+  - component: {fileID: 7162450738665880266}
   m_Layer: 0
   m_Name: ShaiHuludPit
   m_TagString: Untagged
@@ -33,6 +34,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7162450738665880266
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6866389458567342884}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5143c6791cf4b4cd6ba6310aed2d6663, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _vfxSand: {fileID: 8104590596905870193}
 --- !u!1 &8104590596905870193
 GameObject:
   m_ObjectHideFlags: 0

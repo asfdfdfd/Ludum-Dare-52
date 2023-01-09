@@ -14,6 +14,7 @@ public class HarvesterController : MonoBehaviour
     [SerializeField] private AudioSource _audioSourceWorking;
 
     [SerializeField] private GameObject _smokeHarvest;
+    [SerializeField] private GameObject _vfxMove;
     
     private Rigidbody _rigidbody;
     
@@ -51,7 +52,9 @@ public class HarvesterController : MonoBehaviour
             
             var distanceToTarget = Vector3.Distance(positionTarget, positionNew);
 
-            _isMoving = distanceToTarget > 0.001f; 
+            _isMoving = distanceToTarget > 0.001f;
+
+            _vfxMove.SetActive(_isMoving);
             
             if (_isMoving)
             {
