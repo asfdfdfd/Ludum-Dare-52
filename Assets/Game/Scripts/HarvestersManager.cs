@@ -1,4 +1,5 @@
 using System;
+using DG.Tweening;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -12,6 +13,8 @@ public class HarvestersManager : MonoBehaviour
     [SerializeField] private int _harvestersCount = 3;
 
     [SerializeField] private TextMeshProUGUI _textHarversters;
+
+    [SerializeField] private Camera _camera;
     
     private GameObject _activeHarvester;
     private HarvesterController _activeHarvesterController;
@@ -44,6 +47,8 @@ public class HarvestersManager : MonoBehaviour
     
     private void OnHarversterDestroyed()
     {
+        _camera.DOShakePosition(0.3f, 1.5f);
+        
         _harvestersCount--;
 
         UpdateHarverstersText();

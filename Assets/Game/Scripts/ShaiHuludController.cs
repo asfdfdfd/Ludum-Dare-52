@@ -74,8 +74,6 @@ public class ShaiHuludController : MonoBehaviour
         }
         
         yield return _rigidbody.DOMoveY(_startY, duration).WaitForCompletion();
-
-        _audioSourceShaiHuludExit.DOFade(0.0f, 0.1f);
         
         if (_isHumanEaten)
         {
@@ -83,5 +81,7 @@ public class ShaiHuludController : MonoBehaviour
             
             Instantiate(_prefabSpice, spicePosition, Quaternion.identity);
         }
+
+        yield return _audioSourceShaiHuludExit.DOFade(0.0f, 0.1f).WaitForCompletion();
     }
 }

@@ -87,10 +87,11 @@ public class OrnithopterController : MonoBehaviour
             }
             
             UpdateHumanCooldownText();
-        }        
+        }
+    }
 
-        var directionVector = new Vector3(Input.GetAxisRaw("Horizontal"), 0.0f, Input.GetAxisRaw("Vertical"));
-
+    public void Move(Vector3 directionVector)
+    {
         _isFlying = directionVector.sqrMagnitude > Mathf.Epsilon;
         
         var newPosition = gameObject.transform.position + directionVector * _speed * Time.deltaTime;
@@ -116,15 +117,6 @@ public class OrnithopterController : MonoBehaviour
         }
 
         gameObject.transform.position = newPosition;
-
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            SpawnBeam();
-        } 
-        else if (Input.GetKeyDown(KeyCode.E))
-        {
-            SpawnHuman();
-        }
         
         TuneFlyingSound(Time.deltaTime);
     }
@@ -146,7 +138,7 @@ public class OrnithopterController : MonoBehaviour
         }
     }
     
-    private void SpawnBeam()
+    public void SpawnBeam()
     {
         if (_beamSpawnCooldownTimer == 0.0f)
         {
@@ -162,7 +154,7 @@ public class OrnithopterController : MonoBehaviour
         }
     }
 
-    private void SpawnHuman()
+    public void SpawnHuman()
     {
         if (_humanSpawnCooldownTimer == 0.0f)
         {
