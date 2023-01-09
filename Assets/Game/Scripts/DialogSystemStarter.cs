@@ -6,8 +6,6 @@ public class DialogSystemStarter : MonoBehaviour
     
     private void Start()
     {
-        GameState.IsTutorialDisplayed = true;
-        
         _dialogSystem.SetActive(!GameState.IsTutorialDisplayed);
     }
 }
